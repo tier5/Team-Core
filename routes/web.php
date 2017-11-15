@@ -21,6 +21,7 @@ Route::get('productList', 'Product\ProductController@productList');
 Route::get('addProduct', function () {
     return view('product.addProduct');
 });
+
 Route::post('createProduct', 'Product\ProductController@createProduct');
 Route::post('deleteProduct', 'Product\ProductController@deleteProduct');
 Route::get('editProduct/{name}/{id}', 'Product\ProductController@editProduct');
