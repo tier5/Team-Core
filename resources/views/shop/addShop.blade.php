@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.apps')
 @section('content')
 <div id="page-wrapper">
     <div class="container-fluid">
@@ -70,6 +70,13 @@
 
     <script type="text/javascript">
         $(document).ready(function(){
+
+            $("#product_dropdown").select2({
+                placeholder: "Select Product",
+                multiple: true,
+
+            });
+
             $("#createShop").validate({
                 rules: {
                     'shop_name': {
@@ -89,23 +96,37 @@
                         required: true
                     }
                 },
-                /*submitHandler: function(form) {
+                submitHandler: function(form) {
+
+                    var formData = new FormData($('#createShop')[0]);
+                    var obj=$('#createShop');
                     $.ajax({
-                        url: form.action,
-                        type: form.method,
-                        data: $("#createProduct").serialize(),
-                        success: function(response) {
-                            console.log(response);
-                        }            
+                        url: $('#createShop').attr('action'),
+                        type: 'POST',
+                        data: formData,
+                        async: false,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        'dataType':'json',
+                        success: function (resp) {
+                            if(resp.status==1){
+                                setTimeout(function () {
+                                  swal ( "Success" , resp.massage ,  "success" )
+                                }, 1000);
+                                $("#product_dropdown").select2('val', 'All');
+                                $("input[type=text],input[type=file], textarea").val("");
+                            }else{
+                                setTimeout(function () {
+                                  swal ( "" , resp.massage ,  "error" )
+                                }, 1000);
+                            }
+                        },
+                        
                     });
-                }*/
+                }
 
                 /********** select 2 dropdown initialize *************/
-            });
-
-            $("#product_dropdown").select2({
-                placeholder: "Select Product",
-                multiple: true,
             });
         });
     </script>

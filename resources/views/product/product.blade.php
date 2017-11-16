@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.apps')
 @section('content')
 <div id="page-wrapper">
     <div class="container-fluid">
@@ -32,7 +32,7 @@
                             	@foreach($products as $key => $product)
 	                                <tr class="odd gradeX">
 	                                    <td>{{ $product->id }}</td>
-	                                    <td> {!!HTML::image(config('global.productPath').$product->product_image   , 'alt', array('width'=>'50', 'height'=>'50'))!!}</td> 
+	                                    <td align="center"> {!!HTML::image(config('global.productPath').$product->product_image   , 'alt', array('width'=>'50', 'height'=>'50'))!!}</td> 
 	                                    <td>{{ $product->product_name }}</td>
 	                                    <td>{{ $product->product_detail }}</td>
 	                                    <td>

@@ -15,13 +15,20 @@ use Image;
 
 class ProductController extends Controller
 {
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function productList()
-    {
+    {   
     	$products=Product::get();
 /*        echo "<pre>"; print_r($products);echo "</pre>";die;
 */    	return view('product.product', compact('products'));
     }
 
+    /**
+     * @return $this
+     */
     public function createProduct()
     {	
     	$data=Input::all();
@@ -61,19 +68,17 @@ class ProductController extends Controller
                 
         		$last_insert_id = $product->id;
         		
-				Session::flash('message', 'Product create successfull.');
+				echo json_encode(array('status' =>1,'massage' => "Product create successfull." ));
 		        
             }else{
-               Session::flash('message', 'Product Not Created . Please insert Product Image.'); 
-
-            }
-            
-            return redirect('addProduct');
-            
+                echo json_encode(array('status' =>0,'massage' => "Product Not Created . Please insert Product Image." ));
+            }            
         }
     }
 
-    
+    /**
+     *
+     */
     public function deleteProduct(){
 
     	$data=Input::all();
@@ -87,6 +92,12 @@ class ProductController extends Controller
 
     }
 
+
+    /**
+     * @param $product_name
+     * @param $product_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function editProduct($product_name,$product_id){
 
     	$product=Product::find($product_id);
@@ -95,6 +106,9 @@ class ProductController extends Controller
 
     }
 
+    /**
+     * @return $this
+     */
     public function updateProduct()
     {	
     	$data=Input::except('_token','submit');
@@ -138,12 +152,11 @@ class ProductController extends Controller
     		$product_res =Product::where('id','=',$data['id'])->update($data);
 
     		if($product_res){
-    			Session::flash('message', 'Product Updated successfull.'); 
+                echo json_encode(array('status' =>1,'massage' => "Product Updated successfull." ));
     		} else {
-    			Session::flash('message', 'Product Not Updated .Please Try Again.');
+                echo json_encode(array('status' =>0,'massage' => "Product Not Updated .Please Try Again." ));
     		}     		
 				              
-            return redirect('editProduct'.'/'.urlencode(str_replace('/', '&#47;',$data['product_name'])).'/'.$data['id']);
         }
     }
 

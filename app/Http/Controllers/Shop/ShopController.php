@@ -16,12 +16,19 @@ use Image;
 
 class ShopController extends Controller
 {
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function shopList()
     {
     	$shops=Shop::get();
     	return view('shop.shop', compact('shops'));
     }
 
+    /**
+     * @param $product_list
+     * @return array
+     */
     public function formatProductArray($product_list){
         $products=array();
         foreach ($product_list as $key => $product) {
@@ -30,7 +37,11 @@ class ShopController extends Controller
         return $products;
         
     }
-    
+
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function addShop()
     {
     	$product_list=Product::get();
@@ -38,7 +49,9 @@ class ShopController extends Controller
     	return view('shop.addShop', compact('products'));
     }
 
-    
+    /**
+     * @return $this
+     */
     public function createShop()
     {   
         $data=Input::all();
@@ -91,19 +104,17 @@ class ShopController extends Controller
                 }
 
                 /********* inserted into pivot table **************/
-
-                Session::flash('message', 'Shop create successfull.');
+                echo json_encode(array('status' =>1,'massage' => "Shop create successfull." ));
                 
             }else{
-               Session::flash('message', 'Shop Not Created . Please insert Shop Image.'); 
-
-            }
-            
-            return redirect('addShop');
-            
+                echo json_encode(array('status' =>0,'massage' => "Shop Not Created . Please insert Shop Image." ));
+            }               
         }
     }
 
+    /**
+     *
+     */
     public function deleteShop(){
 
         $data=Input::all();
@@ -117,6 +128,12 @@ class ShopController extends Controller
 
     }
 
+
+    /**
+     * @param $shop_name
+     * @param $shop_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function editShop($shop_name,$shop_id)
     {   
         $product_list=Product::get();
@@ -131,6 +148,10 @@ class ShopController extends Controller
        return view('shop.editShop', compact('products','shop'));
     }
 
+
+    /**
+     * @return $this
+     */
     public function updateShop()
     {   
         $data=Input::except('_token','submit');
@@ -178,26 +199,20 @@ class ShopController extends Controller
                 $data['shop_images']=$filename;
                 $shop_res =Shop::where('id','=',$data['id'])->update($data);
 
-                if($shop_res){
-                    Session::flash('message', 'Shop Updated successfull.'); 
-                } else {
-                    Session::flash('message', 'Shop Not Updated .Please Try Again.');
-                }           
-
-                /*$shop_id = $data['id'];
-
-                $productshop = Shop::find($shop_id);
-
-                foreach ($products as $key => $product) {
-                    $productshop->product()->toggle($product);
-                }*/
-                
-                
-            return redirect('editShop'.'/'.urlencode(str_replace('/', '&#47;',$data['shop_name'])).'/'.$data['id']);
-            
+            if($shop_res){
+                echo json_encode(array('status' =>1,'massage' => "Shop Updated successfull." ));
+            } else {
+                echo json_encode(array('status' =>0,'massage' => "Shop Not Updated .Please Try Again." ));
+            }           
         }
     }
 
+
+    /**
+     * @param $shop_name
+     * @param $shop_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function ShopProducts($shop_name,$shop_id)
     {   
 
@@ -224,6 +239,10 @@ class ShopController extends Controller
 
     }
 
+
+    /**
+     * @return $this|\Illuminate\Http\RedirectResponse
+     */
     public function addShopProducts()
     {   
         $data=Input::all();
@@ -257,6 +276,10 @@ class ShopController extends Controller
         }
     }
 
+
+    /**
+     *
+     */
     public function shopProductPrice()
     {   
         $data=Input::all();
@@ -276,7 +299,9 @@ class ShopController extends Controller
         }
     }
 
-    
+    /**
+     *
+     */
     public function detachProduct()
     {   
         $data=Input::all();

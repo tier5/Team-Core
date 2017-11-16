@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.apps')
 @section('content')
 <div id="page-wrapper">
     <div class="container-fluid">
@@ -96,6 +96,11 @@
 
     <script type="text/javascript">
         $(document).ready(function(){
+
+            setTimeout(function () {
+                $('.alert').hide();
+            }, 2000);
+            
             $("#addShopProducts").validate({
                 rules: {
                     'products[]': {

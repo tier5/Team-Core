@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.apps')
 @section('content')
 <div id="page-wrapper">
     <div class="container-fluid">
@@ -90,17 +90,34 @@
                         required: true
                     }
                 },
-                /*submitHandler: function(form) {
-                    $.ajax({
-                        url: form.action,
-                        type: form.method,
-                        data: $("#createProduct").serialize(),
-                        success: function(response) {
-                            console.log(response);
-                        }            
-                    });
-                }*/
+                submitHandler: function(form) {
 
+                    var formData = new FormData($('#updateShop')[0]);
+                    var obj=$('#updateShop');
+                    $.ajax({
+                        url: $('#updateShop').attr('action'),
+                        type: 'POST',
+                        data: formData,
+                        async: false,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        'dataType':'json',
+                        success: function (resp) {
+                            if(resp.status==1){
+                                setTimeout(function () {
+                                  swal ( "Success" , resp.massage ,  "success" )
+                                }, 1000);
+                                $("input[type=text],input[type=file], textarea,select").val("");
+                            }else{
+                                setTimeout(function () {
+                                  swal ( "" , resp.massage ,  "error" )
+                                }, 1000);
+                            }
+                        },
+                        
+                    });
+                }
                 /********** select 2 dropdown initialize *************/
             });
 
