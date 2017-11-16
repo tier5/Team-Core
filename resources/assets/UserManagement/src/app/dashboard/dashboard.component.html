@@ -1,0 +1,82 @@
+<app-header></app-header>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="panel-body">
+            <button class="btn btn-primary" (click)="onGet()">Get Users </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container" *ngIf="getEdit">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="panel-body">
+            <form class="form-horizontal" (ngSubmit)="onEdit(f)" #f="ngForm">
+
+              <div class="form-group">
+                <label for="name" class="col-md-4 control-label">Username</label>
+                <div class="col-md-6">
+                  <input id="name" type="text" class="input btn-log"  name="name" [(ngModel)]="getEdit.name"  required autofocus>
+                </div>
+              </div>
+              <input id="id" type="hidden" class="input btn-log"  name="id" [(ngModel)]="getEdit.id"  required autofocus>
+              <div class="form-group">
+                <label for="name" class="col-md-4 control-label">Email</label>
+                <div class="col-md-6">
+                   <input id="email" type="email" class="input btn-log" [(ngModel)]="getEdit.email" name="email"   required autofocus>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-md-8 col-md-offset-4">
+                  <button type="submit" class="btn btn-primary"> Edit User</button>
+                </div>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container" *ngIf="users">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="panel-body">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th> Name</th>
+                  <th>Email</th>
+                  <th>Edit</th>
+                  <th> Delete </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of users">
+                  <td>{{user.id}}</td>
+                  <td>{{user.name}}</td>
+                  <td>{{user.email}}</td>
+                  <td><button class="btn btn-primary" (click)="onGetEdit(user)">Edit </button></td>
+                  <td><button class="btn btn-danger" (click)="onDelete(user.id)">Delete </button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

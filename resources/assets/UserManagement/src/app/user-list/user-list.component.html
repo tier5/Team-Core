@@ -1,0 +1,29 @@
+<app-header></app-header>
+<div class="container" *ngIf="users">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="panel-body">
+            <table class="table table-bordered">
+              <thead>
+              <tr>
+                <th>Id</th>
+                <th> Name</th>
+                <th>Email</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let user of users">
+                <td>{{user.id}}</td>
+                <td>{{user.name}}</td>
+                <td>{{user.email}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

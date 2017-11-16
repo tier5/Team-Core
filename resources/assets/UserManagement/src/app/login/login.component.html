@@ -1,0 +1,41 @@
+<app-header></app-header>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="panel panel-default">
+        <div class="panel-heading">Login</div>
+        <div class="panel-body">
+          <form class="form-horizontal" (ngSubmit)="loginUser(f)" #f="ngForm">
+
+            <div class="form-group" [ngClass]="{ 'has-error' : name.invalid || formCheck }">
+              <label for="name" class="col-md-4 control-label">Email</label>
+              <div class="col-md-6">
+                <input id="name" type="text" class="form-control" ngModel name="name"  #name="ngModel" required autofocus>
+                <p *ngIf="name.untouched || name.invalid" class="help-block"> <span> Please enter a valid username </span></p>
+              </div>
+
+            </div>
+
+            <div class="form-group" [ngClass]="{ 'has-error' : password.invalid || formCheck }" >
+              <label for="password" class="col-md-4 control-label">Password</label>
+              <div class="col-md-6">
+                <input id="password" type="password" class="form-control" ngModel name="password"  #password="ngModel" required>
+                <p *ngIf="password.untouched || password.invalid" class="help-block"> <span> Please enter a valid password </span></p>
+                <p *ngIf="formCheck" class="help-block"> <span> {{formCheck}} </span></p>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-md-8 col-md-offset-4">
+                <button type="submit"
+                        class="btn btn-primary" [disabled]="f.invalid">
+                  Login
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
